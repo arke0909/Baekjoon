@@ -1,9 +1,22 @@
-int n = int.Parse(Console.ReadLine());
+using System;
+using System.Numerics;
+
+namespace BeakJoon
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
             string str = Console.ReadLine();
-            int result = 0,multiply = 1;
+            BigInteger result = 0;
+            BigInteger multiply = 1;
 
             for (int i = 0; i < n; i++, multiply *= 31)
             {
-                result += (str[i] - 96) * multiply;
+                result += (str[i] - 'a' + 1) * multiply;
             }
-                Console.WriteLine(result);
+                Console.WriteLine(result % 1234567891);
+        }
+    }
+}
