@@ -7,7 +7,7 @@ int main()
 	// cnt = 인덱스이자 요소의 개수
 	int n,cnt = 0; 
 	string command;
-	int* queue = new int [100001];
+	int* queue = new int [100000];
 
 	cin >> n;
 
