@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+#include <map>
+#include <algorithm>
 using namespace std;
 
 int main()
@@ -16,10 +19,11 @@ int main()
 		char c;
 		cin >> c;
 
-		result += (c - 'a' + 1) * multiply;
+		result += (c - 'a' + 1)* multiply;
+        multiply %= 1234567891;
 	}
 
-	cout << result;
+	cout << result  % 1234567891;
 
 	return 0;
 }
