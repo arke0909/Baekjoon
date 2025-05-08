@@ -18,16 +18,19 @@ int main()
 
 		unordered_map<int, int> map;
 
-		for (int i = 0; i < n + m; ++i)
+		for (int i = 0; i < n; ++i)
 		{
 			int v;
 			cin >> v;
 			map[v]++;
 		}
 
-		for (auto item : map)
+		for (int i = 0; i < m; ++i)
 		{
-			if (item.second > 1)
+			int v;
+			cin >> v;
+			map[v]++;
+			if (map[v] > 1)
 				cnt++;
 		}
 
