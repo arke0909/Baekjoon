@@ -4,38 +4,11 @@
 #include <queue>
 using namespace std;
 
-int k, INF = 1000000000;
-int* values;
-vector<pair<int, int>>* graph;
-
-void Dijkstra(int start)
+struct Node
 {
-	priority_queue<pair<int, int>> pq;
-	pq.push({ start - 1, 0 });
-	values[start - 1] = 0;
-
-	while (!pq.empty())
-	{
-		int current = pq.top().first;
-		int distance = pq.top().second;
-
-		pq.pop();
-
-		if (values[current] < distance) continue;
-
-		for (int i = 0; i < graph[current].size(); ++i)
-		{
-			int next = graph[current][i].first;
-			int nextDistance = distance + graph[current][i].second;
-
-			if (values[next] > nextDistance)
-			{
-				values[next] = nextDistance;
-				pq.push({ next, nextDistance });
-			}
-		}
-	}
-}
+	int p;
+	int v;
+};
 
 int main()
 {
@@ -43,32 +16,56 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n, m, x;
-	bool flag = false;
+	vector<vector<int>> vec(300001);
+	int n, m, k, x, INF = 10000000;
+	vector<int> flag(300001, INF), answer;
 	cin >> n >> m >> k >> x;
-
-	graph = new vector<pair<int, int>>[n];
-	values = new int[n];
-	fill(values, values + n, INF);
 
 	for (int i = 0; i < m; ++i)
 	{
 		int start, end;
 		cin >> start >> end;
 
-		graph[start - 1].push_back({ end - 1, 1 });
+		vec[start].push_back(end);
 	}
 
-	Dijkstra(x);
+	flag[x] = 0;
 
-	for (int i = 0; i < n; ++i)
+	queue<Node> q;
+
+	q.push({ x, 0 });
+
+	while (!q.empty())
 	{
-		if (k == values[i])
+		int curP = q.front().p;
+		int curV = q.front().v;
+
+		q.pop();
+
+		int nv = curV + 1;
+		for (auto item : vec[curP])
 		{
-			cout << i + 1 << '\n';
-			flag = true;
+			if (flag[item] > nv)
+			{
+				if (nv == k)
+				{
+					answer.push_back(item);
+				}
+
+				flag[item] = nv;
+				q.push({ item, nv });
+			}
 		}
 	}
-	if (!flag)
+
+	sort(answer.begin(), answer.end());
+
+	if (answer.empty())
 		cout << -1;
+	else
+		for (auto item : answer)
+		{
+			cout << item << '\n';
+		}
+
 }
