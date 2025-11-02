@@ -1,15 +1,17 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int main()
 {
-	ios_base::sync_with_stdio(false);
+	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n,cnt = 0, arr[1000], lis[1000], idx = 0;
+	int n, arr[1000], lis[1000], answer = 0;
+
 	cin >> n;
 
 	for (int i = 0; i < n; ++i)
@@ -17,36 +19,21 @@ int main()
 		cin >> arr[i];
 	}
 
-	lis[0] = arr[0];
-
-	for (int i = 1; i < n; ++i)
+	for (int i = 0; i < n; ++i)
 	{
-		if (lis[idx] < arr[i])
-		{
-			lis[idx + 1] = arr[i];
-			idx++;
-		}
-		else
-		{
-			int left = 0, right = idx, target = arr[i];
+		int temp = 0;
 
-			while (left < right)
+		for (int j = 0; j < i; ++j)
+		{
+			if (arr[i] > arr[j] && temp < lis[j])
 			{
-				int mid = (left + right) / 2;
-
-				if (lis[mid] < target)
-				{
-					left = mid + 1;
-				}
-				else
-				{
-					right = mid;
-				}
+				temp = lis[j];
 			}
-
-			lis[right] = arr[i];
 		}
+
+		lis[i] = temp + 1;
+		answer = max(lis[i], answer);
 	}
 
-	cout << idx + 1;
+	cout << answer;
 }
